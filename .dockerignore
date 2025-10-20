@@ -1,0 +1,25 @@
+# Git
+.git
+.gitignore
+
+# Python virtual environment
+.venv
+venv
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Data files - should be mounted, not copied
+data/

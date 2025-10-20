@@ -1,0 +1,67 @@
+# docker-compose.yml
+
+services:
+  whisperx:
+    build:
+      context: .
+      target: runtime-base
+      args:
+        UID: 1001
+    image: whisperx:base
+    container_name: whisperx-app
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      HF_TOKEN: 
+    volumes:
+      # Папка для входных/выходных файлов
+      - ../data:/app/data
+      # Кэш моделей (персистентный)
+      - ./whisper_cache:/.cache
+    working_dir: /app
+    # Не запускать автоматически при docker compose up
+    profiles:
+      - manual
+    stdin_open: true
+    tty: true
+
+  # Сервис для работы с предзагруженными моделями
+  whisperx-full:
+    build:
+      context: .
+      target: final
+      args:
+        UID: 1001
+        WHISPER_MODEL: ${WHISPER_MODEL:-large-v3}
+        ALIGN_LANG: ${ALIGN_LANG:-ru}
+        HF_TOKEN: 
+    image: whisperx:full
+    container_name: whisperx-full-app
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      HF_TOKEN: 
+    volumes:
+      - ./data:/app/data
+      - whisper_cache:/.cache
+    working_dir: /app
+    profiles:
+      - manual
+    stdin_open: true
+    tty: true
+
+volumes:
+  whisper_cache:
+    driver: local
