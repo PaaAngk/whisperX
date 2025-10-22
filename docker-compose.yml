@@ -20,10 +20,8 @@ services:
       NVIDIA_VISIBLE_DEVICES: all
       HF_TOKEN: 
     volumes:
-      # Папка для входных/выходных файлов
       - ../data:/app/data
-      # Кэш моделей (персистентный)
-      - ./whisper_cache:/.cache
+      - whisper_cache:/.cache
     working_dir: /app
     # Не запускать автоматически при docker compose up
     profiles:

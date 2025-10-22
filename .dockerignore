@@ -1,6 +1,7 @@
 # Git
 .git
 .gitignore
+.github
 
 # Python virtual environment
 .venv
@@ -23,3 +24,6 @@ dist/
 
 # Data files - should be mounted, not copied
 data/
+storage
+
+cache

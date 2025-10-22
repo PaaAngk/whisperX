@@ -56,3 +56,8 @@ docker-compose run --rm whisperx data/cut5m.wav --language ru --model large-v3 -
 - `--compute_type float16`: Использовать `float16` для ускорения на совместимых GPU.
 
 Результаты (файлы `.srt`, `.tsv` и т.д.) будут сохранены в директории `data`, рядом с исходным аудиофайлом.
+
+
+docker compose run --rm whisperx /app/data/cut5m.wav  --language ru --output_dir data --device cuda --compute_type float16 --diarize
+
+docker build --target runtime-base -t whisperx:base .
